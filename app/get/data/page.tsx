@@ -5,7 +5,7 @@ const Data = async () => {
   const nextCookies = cookies();
   const ticket = nextCookies.get('ticket')?.value;
 
-  let html: string | TrustedHTML;
+  let html: string | undefined;
   try {
     const res = await axios.get('http://shserver.top:8080/test/users/getData', {
       headers: {
@@ -18,14 +18,12 @@ const Data = async () => {
     console.log('Error', err);
   }
 
-  // @ts-ignore
   const matcher = html?.match(/<i>(.*?)<\/i>/)?.[0];
-  // @ts-ignore
   const newHtml = html?.replace(/<i>(.*?)<\/i>/, '');
 
   return (
     <div className='mt-32 mx-auto w-full md:w-1/2 text-center [&>*]:mb-5'>
-      <div dangerouslySetInnerHTML={{ __html: newHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: newHtml || <span></span> }} />
       {matcher}
     </div>
   );
