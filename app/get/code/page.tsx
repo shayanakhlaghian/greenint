@@ -60,12 +60,14 @@ const Code = () => {
 
   return (
     <div className='flex flex-col items-center mt-32'>
-      <button
-        className='bg-blue-500 px-6 py-2 rounded-sm'
-        onClick={handleFetch}
-      >
-        Fetch
-      </button>
+      {!data && (
+        <button
+          className='bg-blue-500 px-6 py-2 rounded-sm'
+          onClick={handleFetch}
+        >
+          Fetch
+        </button>
+      )}
       <div className='w-full mt-10 px-10'>
         {data &&
           data
