@@ -14,7 +14,7 @@ interface Inputs {
 }
 
 const Form = () => {
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const { register, handleSubmit, formState } = useForm<Inputs>();
 
   const loginMutation = useMutation({
@@ -25,11 +25,11 @@ const Form = () => {
         pass: password,
       }),
     onSuccess: (data) => {
-      push('/get/data');
-
       localStorage.setItem('ticket', data.data.ticket);
       const cookies = new Cookies();
       cookies.set('ticket', data.data.ticket);
+
+      replace('/get/data');
     },
   });
 
