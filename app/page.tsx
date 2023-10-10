@@ -11,7 +11,7 @@ const Home = () => {
     if (localStorage.getItem('ticket')) {
       replace('/get/data');
     }
-  }, []);
+  }, [replace]);
 
   return (
     <div className='mx-auto w-[90%] md:w-1/3 mt-10'>
