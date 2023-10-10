@@ -35,35 +35,45 @@ const message = 'Write me a chrome extension code';
 const Code = () => {
   const [data, setData] = useState('');
 
-  useEffect(() => {
-    (async () => {
+  const handleFetch = async () => {
+    try {
       const ticket = localStorage.getItem('ticket');
 
-      try {
-        const response = await axios.post(
-          endpoint,
-          { message },
-          { headers: { Authorization: `Bearer ${ticket}` } }
-        );
+      const response = await axios.post(
+        endpoint,
+        { message },
+        { headers: { Authorization: `Bearer ${ticket}` } }
+      );
 
-        response.data.split('\n\n').forEach((val: string) => {
-          if (!val) return;
+      response.data.split('\n\n').forEach((val: string) => {
+        if (!val) return;
 
-          let str = val;
-          str = str.substring(5);
-          const obj = JSON.parse(str);
-          console.log(obj.content);
-          setData((prevData) => `${prevData}${obj.content}`);
-        });
-      } catch (err) {
-        console.log('Error', err);
-      }
-    })();
-  }, []);
+        let str = val;
+        str = str.substring(5);
+        const obj = JSON.parse(str);
+        setData((prevData) => `${prevData}${obj.content}`);
+      });
+    } catch (err) {
+      console.log('Error', err);
+    }
+  };
 
   return (
     <div className='flex flex-col items-center mt-32'>
-      <div className='w-full mt-10 px-10'>{data}</div>
+      <button
+        className='bg-blue-500 px-6 py-2 rounded-sm'
+        onClick={handleFetch}
+      >
+        Fetch
+      </button>
+      <div className='w-full mt-10 px-10'>
+        {data &&
+          data
+            .split('```')
+            .map((chunk) => (
+              <p className='border-2 border-white p-2'>{chunk}</p>
+            ))}
+      </div>
     </div>
   );
 };
