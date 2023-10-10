@@ -70,11 +70,11 @@ const Code = () => {
       )}
       <div className='w-full mt-10 px-10'>
         {data &&
-          data
-            .split('```')
-            .map((chunk) => (
-              <p className='border-2 border-white p-2'>{chunk}</p>
-            ))}
+          data.split('```').map((chunk, index) => (
+            <p key={index} className='border-2 border-white p-2'>
+              {chunk}
+            </p>
+          ))}
       </div>
     </div>
   );
